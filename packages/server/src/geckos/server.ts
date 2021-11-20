@@ -36,41 +36,20 @@ export class GeckosServer {
    * Make the server listen on a specific port.
    * @param port Default port is 9208.
    */
-  listen(port: number = 9208) {
-    this._port = port
-
-    // create the server
-    this.server = http.createServer()
-
-    // on server close event
-    this.server.once('close', () => {
-      this.connectionsManager.connections.forEach((connection: Connection) => connection.close())
-      bridge.removeAllListeners()
-    })
-
-    // add all routes
-    HttpServer(this.server, this.connectionsManager, this._cors)
-
-    // start the server
-    this.server.listen(port, () => {
-      console.log(`Geckos.io signaling server is running on port ${port}`)
-    })
-  }
+  listen(port: number = 9208): any {}
 
   /**
    * Add a existing http server.
    * @param server Your http.Server.
    */
   public addServer(server: http.Server) {
-    this.server = server
-
-    HttpServer(this.server, this.connectionsManager, this._cors)
-
-    // on server close event
-    this.server.once('close', () => {
-      this.connectionsManager.connections.forEach((connection: Connection) => connection.close())
-      bridge.removeAllListeners()
-    })
+    // this.server = server
+    // HttpServer(this.server, this.connectionsManager, this._cors)
+    // // on server close event
+    // this.server.once('close', () => {
+    //   this.connectionsManager.connections.forEach((connection: Connection) => connection.close())
+    //   bridge.removeAllListeners()
+    // })
   }
 
   get port() {

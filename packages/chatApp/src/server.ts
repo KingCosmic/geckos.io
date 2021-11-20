@@ -1,5 +1,5 @@
 /* eslint-disable sort-imports */
-import geckos, { Data, GeckosServer, RawMessage, iceServers } from '@geckos.io/server'
+import geckos, { Data, GeckosServer, RawMessage, iceServers, Middleware } from '@geckos.io/server'
 
 // https://stackoverflow.com/a/55944697
 import { dirname } from 'path'
@@ -11,8 +11,10 @@ const __dirname = dirname(__filename)
 import express from 'express'
 import http from 'http'
 import { join } from 'path'
+
+import bodyParser from 'body-parser'
+
 const app = express()
-const server = http.createServer(app)
 const io: GeckosServer = geckos({
   iceServers: process.env.NODE_ENV === 'production' ? iceServers : [],
   authorization: async (auth, request) => {
@@ -31,14 +33,15 @@ const io: GeckosServer = geckos({
   // }
 })
 
-io.addServer(server)
+app.use(bodyParser.json())
+app.use('/.wrtc', Middleware(io.connectionsManager))
 
 app.use('/static/client', express.static(join(__dirname, '../dist/client')))
 
 app.get('/', (req: any, res: any) => res.sendFile(join(__dirname, '../dist/client/index.html')))
 
 // have to user server instead of app
-server.listen(3000, () => {
+app.listen(3000, () => {
   console.log('express is on http://localhost:3000')
 })
 

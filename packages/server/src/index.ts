@@ -1,6 +1,7 @@
 import { ChannelId, Data, RawMessage } from '@geckos.io/common/lib/types.js'
 import server, { GeckosServer, ServerChannel } from './geckos/server.js'
 import iceServers from '@geckos.io/common/lib/iceServers.js'
+export { Middleware } from './httpServer/httpServer.js'
 
 export default server
 export { server as geckos, iceServers }
