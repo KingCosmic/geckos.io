@@ -34,7 +34,7 @@ const io: GeckosServer = geckos({
 })
 
 app.use(bodyParser.json())
-app.use('/.wrtc', Middleware(io.connectionsManager))
+app.use('/.wrtc', Middleware(io.connectionsManager, io.cors))
 
 app.use('/static/client', express.static(join(__dirname, '../dist/client')))
 
