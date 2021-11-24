@@ -49,7 +49,7 @@ export default class ConnectionsManagerClient {
     const res = await fetch(`${host}/connections/${id}/additional-candidates`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'no-cors'
       }
     })
 
@@ -66,7 +66,7 @@ export default class ConnectionsManagerClient {
   async connect() {
     const host = `${this.url}/.wrtc/v2`
 
-    let headers: any = { 'Content-Type': 'application/json' }
+    let headers: any = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'no-cors' }
     if (this.authorization) headers = { ...headers, ['Authorization']: this.authorization }
     let userData = {}
 
@@ -169,7 +169,7 @@ export default class ConnectionsManagerClient {
           method: 'POST',
           body: JSON.stringify(this.localPeerConnection.localDescription),
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'no-cors'
           }
         })
       } catch (error: any) {
